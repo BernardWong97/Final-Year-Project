@@ -90,3 +90,42 @@ and object detections so no meeting with the supervisor.
 Found a widely used Cars dataset from Stanford with training and testing images:
 <https://ai.stanford.edu/~jkrause/cars/car_dataset.html>  
 Could do Convolutional Neural Network for cars, need advices from supervisor.
+
+## Week 6 (19<sup>th</sup> November 2019 - 25<sup>th</sup> November 2019)
+Code up a detector script to use YOLO/COCO/YOLO-TINY pre-trained model and take some image frames from webcam and do detections.
+Output is better than expected while detecting every objects recognized by the model.
+
+Then tried to use the webcam and extract every frame into image and send into the detector function.  
+The frame rate is very low due to tensorflow uses CPU instead of GPU.  
+Running System:
+- Processor: Intel i7-7700K 4.20GHz (8 CPUs)
+- Graphic Card: Nvidia GeForce GTX 1080
+To get better frame rate and faster processing time, need to somehow use GPU instead.
+
+Spent whole weekend trying to setup Tensorflow GPU.  
+Installed Nvidia CUDA toolkit to enable GPU processing and found that tensorflow-gpu doesn't support tensorflow 2.0 yet.  
+Reinstalled all packages and libraries and downgraded them so that the tensorflow-gpu supports them.
+
+Finally the tensorflow runs on GPU and the frame rate and processing time dramatically increased.  
+[Here is the link to a demo clip of the detector](https://youtu.be/ZLs9EhBChGc)
+
+Note:  
+- resnet50_coco_best model has very high accuracy but use more processing time, GPU not powerful enough.
+- yolo model has moderate accuracy and moderate processing time, suitable for this project.
+- yolo-tiny model has fast processing time but low accuracy, sometimes even cars do not recognize.
+
+## Week 7 (26<sup>th</sup> November 2019 - 2<sup>th</sup> November 2019)
+Did a lot of research on Convolutional Neural Networks. Every research link and references/citations are in the README.md.  
+Decided to use a pre-trained weights from yolov3 and adapt an existing model script.  
+Found ways to use darknet model and convert the already existing yolov3 model to detect just car object.
+
+DarkFlow is a python implementation of YoloV2 using tensorflow but I reckon it works with version 3 too.  
+Need to re-train the model to recognise only cars instead of other objects by using the car datasets from Stanford.  
+The datasets consist of:
+- 8144 training images
+- 8041 testing images
+- bounding boxes for all images
+
+Problem:
+- Bounding boxes data are in .mat format (MatLab) and need to find a way to convert into XML
+- Build XML annotation from images and bounding boxes data
