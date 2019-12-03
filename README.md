@@ -13,5 +13,10 @@ The purpose of this application is to show how a machine can learn from datasets
 - Flask
 - TensorFlow Keras
 
+## Models
+- [Resnet50-COCO](https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/resnet50_coco_best_v2.0.1.h5)
+- [YOLO](https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/yolo.h5)
+- [YOLO-TINY](https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/yolo-tiny.h5)
+
 ## Author
 * [**Bernard Wong**](https://github.com/BernardWong97)
