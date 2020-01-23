@@ -6,7 +6,7 @@ detector = VideoObjectDetection()
 video_capture = cv2.VideoCapture(0)
 
 # Set and load model
-model_path = "./models/yolo.h5"
+model_path = "models/yolo.h5"
 detector.setModelTypeAsYOLOv3()
 detector.setModelPath(model_path)
 detector.loadModel()
@@ -49,7 +49,7 @@ def forFull(output_arrays, count_arrays, average_output_count):
 # Webcam live object detection
 video_path = detector.detectCustomObjectsFromVideo(custom_objects=custom_objects,
                                                    camera_input=video_capture,
-                                                   output_file_path="./output/testvid",
+                                                   output_file_path="output/testvid",
                                                    frames_per_second=20,
                                                    per_second_function=forSeconds,
                                                    minimum_percentage_probability=70,

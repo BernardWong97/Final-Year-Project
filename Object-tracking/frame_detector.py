@@ -1,13 +1,14 @@
-from imageai.Detection import ObjectDetection
-from PIL import Image
 import cv2
+from PIL import Image
+from imageai.Detection import ObjectDetection
+from centroid_tracker import CentroidTracker
 
 # Instantiate detector and activate webcam
 detector = ObjectDetection()
 video_capture = cv2.VideoCapture(0)
 
 # Set and load model
-model_path = "./models/yolo.h5"
+model_path = "models/yolo.h5"
 # input_path = "./input/test4.png"
 # output_path = "./output/results4.png"
 detector.setModelTypeAsYOLOv3()
@@ -20,6 +21,8 @@ custom_objects = detector.CustomObjects(car=True, motorcycle=True, person=True, 
 # Image object detection
 # detections = detector.detectObjectsFromImage(input_image=input_path, output_image_path=output_path)
 
+tracker = CentroidTracker()
+
 # Webcam live object detection
 # While loop webcam each frame
 while True:
@@ -28,16 +31,31 @@ while True:
 
     # If capture returns true
     if ret:
+        rects = []
         img = Image.fromarray(frame)
         returned_image, detection = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
                                                                           input_image=img,
                                                                           output_type="array",
                                                                           input_type="array")
-        cv2.imshow("webcam", returned_image)
 
         for eachObject in detection:
-            print(eachObject["name"], " : ", eachObject["percentage_probability"], " : ", eachObject["box_points"])
-            print("--------------------------------")
+            rects.append(eachObject["box_points"])
+
+            (startX, startY, endX, endY) = eachObject["box_points"]
+            cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+
+        objects = tracker.update(rects)
+
+        if objects is not None:
+            for (objectID, centroid) in objects.items():
+                # draw both the ID of the object and the centroid of the
+                # object on the output frame
+                text = "ID {}".format(objectID)
+                cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
+
+        cv2.imshow("Frame", frame)
 
     # Press q to end feed
     if cv2.waitKey(1) & 0xFF == ord('q'):
