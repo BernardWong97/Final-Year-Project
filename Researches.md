@@ -5,6 +5,8 @@
 
 ### Machine Learning
 - [How to get started with Machine Learning in about 10 minutes](https://www.freecodecamp.org/news/how-to-get-started-with-machine-learning-in-less-than-10-minutes-b5ea68462d23/)
+- [DeepLearning series: Convolutional Neural Networks](https://medium.com/machine-learning-bites/deeplearning-series-convolutional-neural-networks-a9c2f2ee1524)
+- [DeepLearning series: Object detection and localization — YOLO algorithm, R-CNN](https://medium.com/machine-learning-bites/deeplearning-series-objection-detection-and-localization-yolo-algorithm-r-cnn-71d4dfd07d5f)
 
 ### Deploy Machine Learning Model
 - [Flask — Host Your Python Machine Learning Model On Web](https://medium.com/fintechexplained/flask-host-your-python-machine-learning-model-on-web-b598151886d)
@@ -34,6 +36,18 @@
 ### DarkFlow
 - [GitHub - Creating Darkflow Annotations for dataset](https://github.com/jatinmandav/darkflow/blob/master/generateXML_CSV.py)
 - [Stack Overflow - How to Convert those annotations into Darkflow format](https://github.com/thtrieu/darkflow/issues/606)
+- [Stack Overflow - Yolo Darknet Detecting Only Specific Class like Person, Cat, Dog etc](https://stackoverflow.com/questions/44674517/yolo-darknet-detecting-only-specific-class-like-person-cat-dog-etc?fbclid=IwAR0sAVq86GOqgFyDcgPnA_5kCB82j1bFELpJzvFRB2E_XG0TN8pC3gyRPVA)
+
+### ImageAI
+- [ImageAI Github](https://github.com/OlafenwaMoses/ImageAI)
+- [ImageAI Official Documentation](https://imageai.readthedocs.io/en/latest/index.html)
+
+### Object Tracking
+- [Nanonets - Simple Online and Realtime Tracking with a Deep Association Metric(DeepSORT)](https://nanonets.com/blog/object-tracking-deepsort/)
+- [DeepSORT Github](https://github.com/nwojke/deep_sort)
+- [Towards Data Science - Pedestrian Tracking in Real-Time Using YOLOv3](https://towardsdatascience.com/pedestrian-tracking-in-real-time-using-yolov3-33439125efdf)
+- [PyImageSearch - Tracking multiple objects with OpenCV](https://www.pyimagesearch.com/2018/08/06/tracking-multiple-objects-with-opencv/)
+- [PyImageSearch - Simple object tracking with OpenCV](https://www.pyimagesearch.com/2018/07/23/simple-object-tracking-with-opencv/)
 
 ### Dataset
 - [Stanford Cars Dataset](https://ai.stanford.edu/~jkrause/cars/car_dataset.html)

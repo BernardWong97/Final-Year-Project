@@ -114,8 +114,8 @@ Note:
 - yolo model has moderate accuracy and moderate processing time, suitable for this project.
 - yolo-tiny model has fast processing time but low accuracy, sometimes even cars do not recognize.
 
-## Week 7 (26<sup>th</sup> November 2019 - 2<sup>th</sup> November 2019)
-Did a lot of research on Convolutional Neural Networks. Every research link and references/citations are in the README.md.  
+## Week 7 (26<sup>th</sup> November 2019 - 2<sup>nd</sup> December 2019)
+Did a lot of research on Convolutional Neural Networks. Every research link and references/citations are in the Researches.md.  
 Decided to use a pre-trained weights from yolov3 and adapt an existing model script.  
 Found ways to use darknet model and convert the already existing yolov3 model to detect just car object.
 
@@ -129,3 +129,45 @@ The datasets consist of:
 Problem:
 - Bounding boxes data are in .mat format (MatLab) and need to find a way to convert into XML
 - Build XML annotation from images and bounding boxes data
+
+## Week 8 (3<sup>rd</sup> December 2019 - 9<sup>th</sup> December 2019)
+Tried installing and using Darkflow but most of the stuff had already done by Darkflow using configuration file.  
+The Darkflow are easy to use as everything is provided by the repository like labels, datasets, and configs.  
+Since I wanted to learn something from this project, I might as well use the ImageAI that I am familiar with and it is 
+well documented. Deleted Darkflow net and revert project back to using ImageAI.
+
+Meeting conclusion:
+- It is alright that I use ImageAI library preset model and detection.
+- Do not overcomplicated the project.
+- Try to retrain the ImageAI detection to fewer classes as it now detects over 80 classes.
+
+## Week 9 (10<sup>th</sup> December 2019 - 16<sup>th</sup> December 2019)
+Did a little bit of research on how to deploy application onto the cloud server like AWS while taking webcam video feed from it.  
+Did not do much stuff, only read some articles about object detections and tracking only to learn that object detection and 
+object tracking are two different things.  
+
+What I want for the project is more suitable to implement object tracking than detection as object detection is simply just 
+recognise and detect object in a frame but tracking is to identify if the object in the frame is the same as previous frames to 
+consider it as the same object. Object tracking opens up a lot of possibilities on data analysis for the data visualization of the project.
+
+Meeting conclusion:
+- Last meeting before Christmas.
+- Suggested multiple algorithms for object tracking like Kalman filter, Hungarian algorithm and Centroid tracking.
+- After finishing tracking, try deploy on cloud servers.
+
+## Week 10 - 13 (17<sup>th</sup> December 2019 - 13<sup>th</sup> January 2020)
+Winter exams and Christmas holiday, was out for holiday, no progress on project.  
+Did some readings on Kalman filter object tracking and Centroid based object tracking.  
+Found a deep learning object tracking library called Simple Online and Realtime Tracking with a Deep Association Metric (DeepSORT).  
+
+## Week 14 (14<sup>th</sup> January 2020 - 22<sup>th</sup> January 2020)
+Found multiple ways to detect custom objects without retrain ImageAI models. There are many classes and functions available to filter out 
+custom object classes. DeepSORT is a wonderful library but it uses Darkflow object detection library and uses Kalman filter and deep learning 
+to track objects by comparing features. The library already implement most of the functionality and is not greatly documented so there are still 
+many things I cannot get around with.  
+
+Decided to implement a simple object tracking with OpenCV using centroid based object tracking. The algorithm steps is as follows:
+- Take bounding boxes coordinates and compute the center of the bounding box, which identify an object (Centroid).
+- Compute Euclidean distance between new bounding boxes and existing objects.
+- Update object coordinates to the new bounding boxes representing the object.
+- Register the new object when appears and deregister the old object when disappears.
