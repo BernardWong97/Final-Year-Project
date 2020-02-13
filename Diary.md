@@ -199,3 +199,5 @@ Did extensive researches on Kalman filter and could not really understand how to
 predict next position of bounding box using the Kalman filter algorithm. This [blog](https://medium.com/@jaems33/understanding-kalman-filters-with-python-2310e87b8f48) gave a very 
 good insight on how Kalman filter works and implementation, but I am still struggling on how to adapt it into my project.
 
+## Week 17 (6<sup>th</sup> February 2020 - 13<sup>th</sup> February 2020)
+
