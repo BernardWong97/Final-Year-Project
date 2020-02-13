@@ -174,7 +174,7 @@ The algorithm steps is as follows:
 - Register the new object when appears and deregister the old object when disappears.
 
 ## Week 15 (23<sup>rd</sup> January 2020 - 29<sup>th</sup> January 2020)
-GDPR legislation came into my mind and I am worried that the legislation may affect the project regarding taking live video of vehicles and pedestrian without their consent. 
+General Data Protection Regulation (GDPR) came into my mind and I am worried that the legislation may affect the project regarding taking live video of vehicles and pedestrian without their consent. 
 I will ask the supervisor regarding the GDPR legislation for some advices.  
 
 Tried to implement centroid object tracking and output of the implementation has a lot of issues:
@@ -188,3 +188,4 @@ of the public domain and have a look into the legislation to see whether it is a
 - Just the centroid tracking is not stable enough to identify the object whether is the same one from the previous frames. Need to use Kalman filter to 
 estimate the possibility of the next bounding box position to track it efficiently.
 - Try to take a break from the research part of the project (Object tracking) and give some time into preparing for application build and deployment like web application.
+
