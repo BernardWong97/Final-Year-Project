@@ -189,3 +189,13 @@ of the public domain and have a look into the legislation to see whether it is a
 estimate the possibility of the next bounding box position to track it efficiently.
 - Try to take a break from the research part of the project (Object tracking) and give some time into preparing for application build and deployment like web application.
 
+## Week 16 (30<sup>th</sup> January 2020 - 5<sup>th</sup> February 2020)
+Contacted some lecturers and Data Protection Officers from the campus for advices regarding the GDPR had any impact to my project. They want to see if my live video feed is doing the following:
+- Is the webcam capturing any identifiable personal data (identify individuals and/or car registration plates)?
+- Does this add any value to your project or is your requirement simply for object detection/tracking without necessarily identifying the individuals/objects?
+- How far zoomed is the webcam (is it just capturing road traffic? Is it capturing images of individuals entering the residence)?
+
+Did extensive researches on Kalman filter and could not really understand how to implement it into my project. There are limited resource online regarding 
+predict next position of bounding box using the Kalman filter algorithm. This [blog](https://medium.com/@jaems33/understanding-kalman-filters-with-python-2310e87b8f48) gave a very 
+good insight on how Kalman filter works and implementation, but I am still struggling on how to adapt it into my project.
+
