@@ -16,7 +16,7 @@ detector.setModelPath(model_path)
 detector.loadModel()
 
 # Set custom objects
-custom_objects = detector.CustomObjects(car=True, motorcycle=True, person=True, bicycle=True, truck=True, dog=True)
+custom_objects = detector.CustomObjects(car=True, motorcycle=True, person=True, bicycle=True, dog=True)
 
 # Image object detection
 # detections = detector.detectObjectsFromImage(input_image=input_path, output_image_path=output_path)
@@ -50,10 +50,11 @@ while True:
             for (objectID, centroid) in objects.items():
                 # draw both the ID of the object and the centroid of the
                 # object on the output frame
-                text = "ID {}".format(objectID)
-                cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
+                if tracker.disappeared[objectID] < 1:
+                    text = "ID {}".format(objectID)
+                    cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
         cv2.imshow("Frame", frame)
 
