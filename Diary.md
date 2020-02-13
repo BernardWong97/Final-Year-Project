@@ -166,8 +166,25 @@ custom object classes. DeepSORT is a wonderful library but it uses Darkflow obje
 to track objects by comparing features. The library already implement most of the functionality and is not greatly documented so there are still 
 many things I cannot get around with.  
 
-Decided to implement a simple object tracking with OpenCV using centroid based object tracking. The algorithm steps is as follows:
+Decided to implement a simple object tracking with OpenCV using centroid based object tracking by referencing [PyImageSearch's Algorithm](https://www.pyimagesearch.com/2018/07/23/simple-object-tracking-with-opencv/).  
+The algorithm steps is as follows:
 - Take bounding boxes coordinates and compute the center of the bounding box, which identify an object (Centroid).
 - Compute Euclidean distance between new bounding boxes and existing objects.
 - Update object coordinates to the new bounding boxes representing the object.
 - Register the new object when appears and deregister the old object when disappears.
+
+## Week 15 (23<sup>rd</sup> January 2020 - 29<sup>th</sup> January 2020)
+GDPR legislation came into my mind and I am worried that the legislation may affect the project regarding taking live video of vehicles and pedestrian without their consent. 
+I will ask the supervisor regarding the GDPR legislation for some advices.  
+
+Tried to implement centroid object tracking and output of the implementation has a lot of issues:
+- Object ID changes when collides with other bounding boxes.
+- Centroid still floats around even after the object disappeared from the view.
+- Losses of detection on the same object may or may not recognized as a new object.
+
+Meeting conclusion:  
+- Supervisor concerns about this project have a direct relation of the GDPR legislation, advising to pause the project on live streaming taking footage 
+of the public domain and have a look into the legislation to see whether it is allowed to do so.
+- Just the centroid tracking is not stable enough to identify the object whether is the same one from the previous frames. Need to use Kalman filter to 
+estimate the possibility of the next bounding box position to track it efficiently.
+- Try to take a break from the research part of the project (Object tracking) and give some time into preparing for application build and deployment like web application.
