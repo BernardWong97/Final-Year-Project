@@ -6,6 +6,9 @@ from centroid_tracker import CentroidTracker
 # Instantiate detector and activate webcam
 detector = ObjectDetection()
 video_capture = cv2.VideoCapture(0)
+video_capture.set(3, 960)
+video_capture.set(4, 540)
+video_capture.set(cv2.CAP_PROP_AUTOFOCUS, 0)
 
 # Set and load model
 model_path = "models/yolo.h5"
@@ -32,7 +35,8 @@ while True:
     # If capture returns true
     if ret:
         rects = []
-        names = []
+        text = ""
+        x, y = 0, 0
         img = Image.fromarray(frame)
         returned_image, detection = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
                                                                           input_image=img,
@@ -44,6 +48,7 @@ while True:
 
             (startX, startY, endX, endY) = eachObject["box_points"]
             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+            text = eachObject["name"]
 
         objects = tracker.update(rects)
 
@@ -52,8 +57,8 @@ while True:
                 # draw both the ID of the object and the centroid of the
                 # object on the output frame
                 if tracker.disappeared[objectID] < 1:
-                    text = "{} {}".format(eachObject["name"], objectID)
-                    cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
+                    text += " " + str(objectID)
+                    cv2.putText(frame, text, (centroid[0] - 30, centroid[1] - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                     cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
