@@ -10,7 +10,7 @@ class LiveDetector:
         self.detector = ObjectDetection()
 
         # Set and load model
-        self.model_path = "models/yolo.h5"
+        self.model_path = "D:/Final-Year-Project/Object-tracking/models/yolo.h5"
         self.detector.setModelTypeAsYOLOv3()
         self.detector.setModelPath(self.model_path)
         self.detector.loadModel()
@@ -25,8 +25,8 @@ class LiveDetector:
 
     def track_objects(self, frame):
         rects = []
+        names = []
         text = ""
-        x, y = 0, 0
         img = Image.fromarray(frame)
         returned_image, detection = self.detector.detectCustomObjectsFromImage(custom_objects=self.custom_objects,
                                                                                input_image=img,
@@ -38,6 +38,7 @@ class LiveDetector:
 
             (startX, startY, endX, endY) = eachObject["box_points"]
             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+            names.append(eachObject["name"])
             text = eachObject["name"]
 
         objects = self.tracker.update(rects)
