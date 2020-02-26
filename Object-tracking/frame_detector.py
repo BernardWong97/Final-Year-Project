@@ -27,9 +27,8 @@ class LiveDetector:
         rects = []
         names = []
         text = ""
-        img = Image.fromarray(frame)
         returned_image, detection = self.detector.detectCustomObjectsFromImage(custom_objects=self.custom_objects,
-                                                                               input_image=img,
+                                                                               input_image=frame,
                                                                                output_type="array",
                                                                                input_type="array")
 

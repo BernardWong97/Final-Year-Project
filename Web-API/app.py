@@ -2,7 +2,6 @@ import sys
 import threading
 
 sys.path.append(r'D:\Final-Year-Project\Object-tracking')
-print(sys.path)
 from frame_detector import LiveDetector
 from flask import Flask, render_template, Response
 import cv2
@@ -15,19 +14,20 @@ video_capture = cv2.VideoCapture(0)
 video_capture.set(3, 960)
 video_capture.set(4, 540)
 video_capture.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+detector = LiveDetector()
 
 
 def generate():
-    global video_capture
+    global video_capture, detector
 
     while True:
         ret, frame = video_capture.read()
 
-        outputImg = LiveDetector().track_objects(frame)
+        outputImg = detector.track_objects(frame)
 
         (ret, encodedImg) = cv2.imencode(".jpg", outputImg)
 
-        yield (b'--frame\r\n' 
+        yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImg) + b'\r\n')
 
