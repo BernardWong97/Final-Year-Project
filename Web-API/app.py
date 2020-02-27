@@ -9,16 +9,12 @@ import cv2
 # Initialize flask
 app = Flask("__main__")
 
-# Initialize camera
-video_capture = cv2.VideoCapture(0)
-video_capture.set(3, 960)
-video_capture.set(4, 540)
-video_capture.set(cv2.CAP_PROP_AUTOFOCUS, 0)
-detector = LiveDetector()
-
-
 def generate():
-    global video_capture, detector
+    video_capture = cv2.VideoCapture(0)
+    video_capture.set(3, 960)
+    video_capture.set(4, 540)
+    video_capture.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+    detector = LiveDetector()
 
     while True:
         ret, frame = video_capture.read()
@@ -47,6 +43,5 @@ if __name__ == '__main__':
     thread = threading.Thread(target=generate)
     thread.daemon = True
     thread.start()
-    app.run(debug=True, threaded=True)
+    app.run(host='0.0.0.0', debug=True, threaded=True)
 
-video_capture.release()
