@@ -11,8 +11,8 @@ class CentroidTracker:
         self.disappeared = OrderedDict()
         self.maxDisappeared = maxDisappeared
 
-    def register(self, centroid):
-        self.objects[self.nextObjectID] = centroid
+    def register(self, centroid, name):
+        self.objects[self.nextObjectID] = [centroid, name]
         self.disappeared[self.nextObjectID] = 0
         self.nextObjectID += 1
 
@@ -20,7 +20,7 @@ class CentroidTracker:
         del self.objects[objectID]
         del self.disappeared[objectID]
 
-    def update(self, rects):
+    def update(self, rects, names):
         if len(rects) == 0:
             for objectID in list(self.disappeared.keys()):
                 self.disappeared[objectID] += 1
@@ -42,10 +42,15 @@ class CentroidTracker:
 
         if len(self.objects) == 0:
             for i in range(0, len(inputCentroids)):
-                self.register(inputCentroids[i])
+                self.register(inputCentroids[i], names[i])
         else:
-            objectIDs = list(self.objects.keys())
-            objectCentroids = list(self.objects.values())
+            objectIDs = []
+            objectCentroids = []
+            objectNames = []
+            for k, v in self.objects.items():
+                objectIDs.append(k)
+                objectCentroids.append(v[0])
+                objectNames.append(v[1])
 
             # compute distance between each pair of existing centroids and the new input centroids
             D = dist.cdist(np.array(objectCentroids), inputCentroids)
@@ -65,7 +70,7 @@ class CentroidTracker:
 
                 # found a match of smallest distance to an existing centroid
                 objectID = objectIDs[row]
-                self.objects[objectID] = inputCentroids[col]
+                self.objects[objectID] = [inputCentroids[col], names[col]]
                 self.disappeared[objectID] = 0
                 usedRows.add(row)
                 usedCols.add(col)
@@ -84,6 +89,6 @@ class CentroidTracker:
                         self.deregister(objectID)
             else:
                 for col in unusedCols:
-                    self.register(inputCentroids[col])
+                    self.register(inputCentroids[col], names[col])
 
-            return self.objects
+        return self.objects

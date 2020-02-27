@@ -26,7 +26,6 @@ class LiveDetector:
     def track_objects(self, frame):
         rects = []
         names = []
-        text = ""
         returned_image, detection = self.detector.detectCustomObjectsFromImage(custom_objects=self.custom_objects,
                                                                                input_image=frame,
                                                                                output_type="array",
@@ -38,16 +37,17 @@ class LiveDetector:
             (startX, startY, endX, endY) = eachObject["box_points"]
             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
             names.append(eachObject["name"])
-            text = eachObject["name"]
 
-        objects = self.tracker.update(rects)
+        objects = self.tracker.update(rects, names)
 
         if objects is not None:
-            for (objectID, centroid) in objects.items():
+            for objectID, objectDetails in objects.items():
                 # draw both the ID of the object and the centroid of the
                 # object on the output frame
+                centroid = objectDetails[0]
+                name = objectDetails[1]
                 if self.tracker.disappeared[objectID] < 1:
-                    text += " " + str(objectID)
+                    text = name + " " + str(objectID)
                     cv2.putText(frame, text, (centroid[0] - 30, centroid[1] - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                     cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
