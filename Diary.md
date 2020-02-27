@@ -200,4 +200,42 @@ predict next position of bounding box using the Kalman filter algorithm. This [b
 good insight on how Kalman filter works and implementation, but I am still struggling on how to adapt it into my project.
 
 ## Week 17 (6<sup>th</sup> February 2020 - 13<sup>th</sup> February 2020)
+Giving myself a breather, pause the research and much more difficult part of the project like implementing Kalman Filter algorithm and switch the project progress to deployment. 
+Set up Flask server and try stream data onto the serving Flask app.  
+Installed React and Flask and tried the basic hello world application see if it works. Decided to branch off React from the master branch.  
+The goal is to set up an environment where Reactjs web-app can take data from Flask API and serve onto the website (React frontend/ Flask backend). 
+An idea came up that the React web-app can have different components for users to choose, as in:
+- Live streaming object tracking and data analysis
+- Upload video and apply object tracking and data analysis
+- Upload photo and apply object detection and data analysis
 
+Did a little tweaking on the centroid tracking so that there are no lingering centroid when bounding box disappears but the object is still registered as an existing object before. 
+The inconsistency of the object tracking like flickering and constantly changing size of bounding box is out of my control, only can minimize the tracking inconsistency from tracking algorithms.  
+
+Thoughts about application deployment, this application must use a mid to high end GPU for good performance. 
+Google Cloud machines offers GPU but does not rent GPU machines for free credit accounts. Leave the deployment until the application is completely developed.
+
+Goal for the next few weeks:
+- Live stream video from Flask to React
+- Do data analysis (graphs, charts, summaries)
+- Start writing dissertation/ report
+
+## Week 18 (14<sup>th</sup> February 2020 - 19<sup>th</sup> February 2020)
+For some reason, the Flask cannot even stream frames from the webcam to the server. 
+The problem is from stuck in infinite while loop and repeatedly initialize everything, including webcam and detector model. 
+After setting up scripts into classes and implement OOP design, the live video stream of the webcam (frames) are successfully sent to the server 
+and displayed to port 5000.
+
+Tried to port forwarding router and firewalls to access from outside the local network so that I can run and display in college for my supervisor but it seems 
+that I was not suppose to do that. The only option is to deploy it onto the cloud and accessing the website that is on the cloud server.
+
+After fixing sending webcam feed to the Flask server, I tried to send processed frames to it but failed as the application could not find the model file.  
+In the meantime, I displayed the object classes/names onto the frames inside the bounding box with their object identifier for future data analysis usage.
+
+Meeting conclusion:
+- To show that this application concerns about GDPR legislation, supervisor and Data Protection Officer recommend do a Gaussian Blur in the bounding box to 
+blur out the pedestrians, vehicles and find a way to cancel out the neighbor's front yard after the processing operation.
+- Need to modify current work directory or use os pathing in order for the application to find the modules and folders.
+- Do all the processing and heavy load work on local machine but only send simplify data to the server/API so that the server can deploy onto cloud without many consideration like GPU requirement.
+
+## Week 19 (20<sup>th</sup> February 2020 - 26<sup>th</sup> February 2020)
