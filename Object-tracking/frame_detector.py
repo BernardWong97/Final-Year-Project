@@ -26,6 +26,7 @@ class LiveDetector:
     def track_objects(self, frame):
         rects = []
         names = []
+        data = {}
         returned_image, detection = self.detector.detectCustomObjectsFromImage(custom_objects=self.custom_objects,
                                                                                input_image=frame,
                                                                                output_type="array",
@@ -52,4 +53,6 @@ class LiveDetector:
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
                     cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
-        return frame
+                    data[name] = objectID
+
+        return frame, data

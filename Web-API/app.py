@@ -9,6 +9,7 @@ import cv2
 # Initialize flask
 app = Flask("__main__")
 
+
 def generate():
     video_capture = cv2.VideoCapture(0)
     video_capture.set(3, 960)
@@ -19,7 +20,7 @@ def generate():
     while True:
         ret, frame = video_capture.read()
 
-        outputImg = detector.track_objects(frame)
+        outputImg, data = detector.track_objects(frame)
 
         (ret, encodedImg) = cv2.imencode(".jpg", outputImg)
 
