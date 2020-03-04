@@ -1,5 +1,5 @@
 import cv2
-from PIL import Image
+import numpy as np
 from imageai.Detection import ObjectDetection
 from centroid_tracker import CentroidTracker
 
@@ -27,23 +27,19 @@ class LiveDetector:
         rects = []
         names = []
         data = {}
+        frame = self.pixelate_frontyard((100, 100), frame)
+
         returned_image, detection = self.detector.detectCustomObjectsFromImage(custom_objects=self.custom_objects,
                                                                                input_image=frame,
                                                                                output_type="array",
                                                                                input_type="array")
-
         for eachObject in detection:
             rects.append(eachObject["box_points"])
             names.append(eachObject["name"])
 
             (startX, startY, endX, endY) = eachObject["box_points"]
             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
-            w, h = endX - startX, endY - startY
-
-            ROI = frame[startY:startY + h, startX:startX + w]
-            blur = cv2.GaussianBlur(ROI, (11, 11), 0)
-
-            frame[startY:startY + h, startX:startX + w] = blur
+            self.blur_object((startX, startY), (endX, endY), (11, 11), frame)
 
         objects = self.tracker.update(rects, names)
 
@@ -62,3 +58,38 @@ class LiveDetector:
                     data[name] = objectID
 
         return frame, data
+
+    def blur_object(self, topLeft, bottomRight, kSize, frame):
+        x, y = topLeft[0], topLeft[1]
+        w, h = bottomRight[0] - topLeft[0], bottomRight[1] - topLeft[1]
+
+        ROI = frame[y:y + h, x:x + w]
+        blur = cv2.GaussianBlur(ROI, kSize, 0)
+
+        frame[y:y + h, x:x + w] = blur
+
+    def blur_frontyard(self, kSize, frame):
+        height, width, channel = frame.shape
+        ROI_corners = np.array([[(320, 490), (895, 320), (895, height), (320, height)]], dtype=np.int32)
+        blurred_frame = cv2.GaussianBlur(frame, kSize, 0)
+        mask = np.zeros(frame.shape, dtype=np.uint8)
+        ignore_mask_color = (255,) * channel
+        cv2.fillPoly(mask, ROI_corners, ignore_mask_color)
+        mask_inverse = np.ones(mask.shape).astype(np.uint8) * 255 - mask
+        frame = cv2.bitwise_and(blurred_frame, mask) + cv2.bitwise_and(frame, mask_inverse)
+
+        return frame
+
+    def pixelate_frontyard(self, kSize, frame):
+        height, width, channel = frame.shape
+        w, h = kSize
+        ROI_corners = np.array([[(320, 490), (895, 320), (895, height), (320, height)]], dtype=np.int32)
+        temp = cv2.resize(frame, (w, h), interpolation=cv2.INTER_LINEAR)
+        pixelated_frame = cv2.resize(temp, (width, height), interpolation=cv2.INTER_NEAREST)
+        mask = np.zeros(frame.shape, dtype=np.uint8)
+        ignore_mask_color = (255,) * channel
+        cv2.fillPoly(mask, ROI_corners, ignore_mask_color)
+        mask_inverse = np.ones(mask.shape).astype(np.uint8) * 255 - mask
+        frame = cv2.bitwise_and(pixelated_frame, mask) + cv2.bitwise_and(frame, mask_inverse)
+
+        return frame
