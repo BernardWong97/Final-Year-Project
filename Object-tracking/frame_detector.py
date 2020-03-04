@@ -34,10 +34,16 @@ class LiveDetector:
 
         for eachObject in detection:
             rects.append(eachObject["box_points"])
+            names.append(eachObject["name"])
 
             (startX, startY, endX, endY) = eachObject["box_points"]
             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
-            names.append(eachObject["name"])
+            w, h = endX - startX, endY - startY
+
+            ROI = frame[startY:startY + h, startX:startX + w]
+            blur = cv2.GaussianBlur(ROI, (11, 11), 0)
+
+            frame[startY:startY + h, startX:startX + w] = blur
 
         objects = self.tracker.update(rects, names)
 

@@ -21,19 +21,7 @@ def generate():
     while True:
         ret, frame = video_capture.read()
 
-        height, width, channels = frame.shape
-
-        # prepare the crop
-        centerX, centerY = int(height / 2), int(width / 2)
-        radiusX, radiusY = int(scale * height / 100), int(scale * width / 100)
-
-        minX, maxX = centerX - radiusX, centerX + radiusX
-        minY, maxY = centerY - radiusY, centerY + radiusY
-
-        cropped = frame[minX:maxX, minY:maxY]
-        resized_cropped = cv2.resize(cropped, (width, height))
-
-        outputImg, data = detector.track_objects(resized_cropped)
+        outputImg, data = detector.track_objects(frame)
 
         (ret, encodedImg) = cv2.imencode(".jpg", outputImg)
 
