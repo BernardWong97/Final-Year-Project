@@ -239,3 +239,4 @@ blur out the pedestrians, vehicles and find a way to cancel out the neighbor's f
 - Do all the processing and heavy load work on local machine but only send simplify data to the server/API so that the server can deploy onto cloud without many consideration like GPU requirement.
 
 ## Week 19 (20<sup>th</sup> February 2020 - 26<sup>th</sup> February 2020)
+
