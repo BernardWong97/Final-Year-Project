@@ -239,4 +239,28 @@ blur out the pedestrians, vehicles and find a way to cancel out the neighbor's f
 - Do all the processing and heavy load work on local machine but only send simplify data to the server/API so that the server can deploy onto cloud without many consideration like GPU requirement.
 
 ## Week 19 (20<sup>th</sup> February 2020 - 26<sup>th</sup> February 2020)
+After changing the working directory and file pathing, the model successfully works and the application also successfully send processed video frames to 
+the listening port. Refactor code and migrate video capture to flask app script rather than the video processing class. I also resized and cropped the video frames to remove the neighbour's front 
+yard because of GDPR concern and increase detection accuracy.
+
+GDPR concern:
+- Neighbour's front yard is showing and need to find a way to censor it.
+- In every bounding box, blur the object inside the boxes.
+
+Structure of the application is not yet determine. For now, the application is collecting frames from the webcam and process object tracking in every frame of the video feed 
+then send as a response to the Flask server. Flask then display the video feed to the website of that particular port. Issue here is the serving end point is streaming the video 
+frames to the website and it is hogging up the request. Need to find a way to also stream the meta-data of the processed frames for data analysis.
+
+Meeting conclusion:
+- Set aside everything and try to apply blurring and censoring bounding boxes and neighbour's front yard (Revert zoom).
+- Object ID is incrementing regardless of object types (first car has id=1, first person came in will be id=2, need to be car 1, person 1)
+- Advised by supervisor, do processing and manipulating stuff on local machine and send meta-data to cloud for front-end.
+- Figure out how to transfer streaming data to static website.
+
+## Week 20 (27<sup>th</sup> February 2020 - 4<sup>th</sup> March 2020)
+Applied Gaussian blur in all the detected object's bounding box so when a person or car is detected, they are blurred. I thought of multiple 
+ways to censoring neighbour's front yard:
+- Applying Gaussian blur also.
+- Blacken out by masking.
+- Mosaic (pixelate) the region of interest.
 
